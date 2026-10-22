@@ -1,3 +1,4 @@
+import AppKit
 import CleanerKit
 import SwiftUI
 
@@ -10,18 +11,25 @@ struct DiskSummaryCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .bottom, spacing: 24) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Espaço livre")
-                        .font(.system(size: 12))
-                        .foregroundStyle(Color.mcSecondary)
-                    HStack(alignment: .firstTextBaseline, spacing: 8) {
-                        Text(volume?.availableBytes.formattedBytes ?? "—")
-                            .font(.system(size: 28, weight: .semibold).monospacedDigit())
-                            .kerning(-0.4)
-                        if let volume {
-                            Text("livres de \(volume.totalBytes.formattedBytes) · \(volume.usedBytes.formattedBytes) usados")
-                                .font(.system(size: 13))
-                                .foregroundStyle(Color.mcSecondary)
+                HStack(alignment: .center, spacing: 12) {
+                    Image(nsImage: NSApp.applicationIconImage)
+                        .resizable()
+                        .interpolation(.high)
+                        .frame(width: 52, height: 52)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Espaço livre")
+                            .font(.system(size: 12))
+                            .foregroundStyle(Color.mcSecondary)
+                        HStack(alignment: .firstTextBaseline, spacing: 8) {
+                            Text(volume?.availableBytes.formattedBytes ?? "—")
+                                .font(.system(size: 28, weight: .semibold).monospacedDigit())
+                                .kerning(-0.4)
+                            if let volume {
+                                Text("livres de \(volume.totalBytes.formattedBytes) · \(volume.usedBytes.formattedBytes) usados")
+                                    .font(.system(size: 13))
+                                    .foregroundStyle(Color.mcSecondary)
+                            }
                         }
                     }
                 }

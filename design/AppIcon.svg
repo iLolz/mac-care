@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1A9AA8"/>
+      <stop offset="1" stop-color="#075560"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="arc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#D8F1F4"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000" flood-opacity="0.28"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#033B43" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)"/>
+  </g>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#sheen)"/>
+  <rect x="101.5" y="101.5" width="821" height="821" rx="183.5" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="3"/>
+  <g filter="url(#soft)">
+    <!-- trilho do disco -->
+    <circle cx="512" cy="512" r="250" fill="none" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="64"/>
+    <!-- espaço livre: arco de 3/4, começando no topo -->
+    <path d="M512 262 A250 250 0 1 1 262 512" fill="none" stroke="url(#arc)" stroke-width="64" stroke-linecap="round"/>
+    <!-- brilho de limpeza -->
+    <path d="M512 382 C522 470 554 502 642 512 C554 522 522 554 512 642 C502 554 470 522 382 512 C470 502 502 470 512 382 Z" fill="#FFFFFF"/>
+    <path d="M628 356 C632 384 642 394 670 398 C642 402 632 412 628 440 C624 412 614 402 586 398 C614 394 624 384 628 356 Z" fill="#FFFFFF" fill-opacity="0.9"/>
+  </g>
+</svg>
