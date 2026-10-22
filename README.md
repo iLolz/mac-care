@@ -2,7 +2,7 @@
 
 Open-source storage cleaner for macOS. Mac Care scans your disk, shows how much space can be reclaimed, cleans the categories you pick and stays in the menu bar so you always see how much space is free.
 
-The app's interface is in Brazilian Portuguese.
+The app is available in Brazilian Portuguese, English and Spanish. It follows your macOS language by default, and you can pick a different one in **Settings › General › Language** (the change applies after reopening the app).
 
 ## Download
 
@@ -74,7 +74,7 @@ Because releases are ad-hoc signed, macOS may treat each new version as a differ
 
 ### Menu bar and launch at login
 
-When you close the window, Mac Care keeps running in the menu bar: the panel shows free space, how much can be reclaimed and shortcuts to scan again or reopen the window. The app also opens at login (turned on at first launch). Both options can be turned off in **Ajustes › Geral** (Settings › General); with the menu bar turned off, closing the window quits the app.
+When you close the window, Mac Care keeps running in the menu bar: the panel shows free space, how much can be reclaimed and shortcuts to scan again or reopen the window. The app also opens at login (turned on at first launch). Both options can be turned off in **Settings › General**; with the menu bar turned off, closing the window quits the app.
 
 ## Building from source
 
