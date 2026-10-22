@@ -3,6 +3,7 @@ import Foundation
 enum SettingsKey {
     static let showInMenuBar = "showInMenuBar"
     static let didConfigureLaunchAtLogin = "didConfigureLaunchAtLogin"
+    static let language = "appLanguage"
 }
 
 enum AppSettings {

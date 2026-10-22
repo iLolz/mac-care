@@ -24,7 +24,7 @@ extension Date {
 extension Int {
     /// "1 item", "1.234 itens".
     var itemCount: String {
-        self == 1 ? "1 item" : "\(formatted()) itens"
+        self == 1 ? String(localized: "1 item") : String(localized: "\(formatted()) itens")
     }
 }
 

@@ -78,7 +78,7 @@ struct CleanupReviewView: View {
     var body: some View {
         let included = model.includedGroups
         VStack(spacing: 0) {
-            SheetHeader(title: "Revisar limpeza", subtitle: subtitle(included))
+            SheetHeader(title: String(localized: "Revisar limpeza"), subtitle: subtitle(included))
             Color.mcRowBorder.frame(height: 1)
 
             ScrollView {
@@ -122,10 +122,12 @@ struct CleanupReviewView: View {
     }
 
     private func subtitle(_ included: [CleanupViewModel.Group]) -> String {
-        guard !included.isEmpty else { return "Nada selecionado. Marque o que quiser limpar." }
+        guard !included.isEmpty else { return String(localized: "Nada selecionado. Marque o que quiser limpar.") }
         let bytes = included.reduce(Int64(0)) { $0 + $1.totalSize }
-        let categories = included.count == 1 ? "1 categoria" : "\(included.count) categorias"
-        return "\(bytes.formattedBytes) em \(categories). Desmarque o que quiser manter."
+        let categories = included.count == 1
+            ? String(localized: "1 categoria")
+            : String(localized: "\(included.count) categorias")
+        return String(localized: "\(bytes.formattedBytes) em \(categories). Desmarque o que quiser manter.")
     }
 }
 
@@ -150,7 +152,7 @@ private struct ReviewGroup: View {
         VStack(spacing: 0) {
             HStack(spacing: 10) {
                 Toggle(isOn: Binding(get: { model.isIncluded(group) }, set: { _ in model.toggle(group) })) {
-                    Text("Incluir \(group.category.title)")
+                    Text("Incluir \(group.category.localizedTitle)")
                 }
                 .toggleStyle(.checkbox)
                 .labelsHidden()
@@ -164,7 +166,7 @@ private struct ReviewGroup: View {
                             .font(.system(size: 10, weight: .bold))
                             .foregroundStyle(Color.mcSecondary)
                             .rotationEffect(.degrees(isExpanded ? 90 : 0))
-                        Text(group.category.title)
+                        Text(group.category.localizedTitle)
                             .font(.system(size: 13, weight: .semibold))
                             .foregroundStyle(Color.mcText)
                         Text(countText(included: included.count))
@@ -177,7 +179,7 @@ private struct ReviewGroup: View {
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .accessibilityValue(isExpanded ? "Expandido" : "Recolhido")
+                .accessibilityValue(isExpanded ? Text("Expandido") : Text("Recolhido"))
 
                 Text(included.reduce(Int64(0)) { $0 + $1.size }.formattedBytes)
                     .font(.system(size: 13, weight: .medium).monospacedDigit())
@@ -220,12 +222,12 @@ private struct ReviewGroup: View {
 
     private var showMoreText: String {
         let bytes = hiddenItems.reduce(Int64(0)) { $0 + $1.size }
-        return "Mostrar mais \(hiddenItems.count.itemCount) · \(bytes.formattedBytes)"
+        return String(localized: "Mostrar mais \(hiddenItems.count.itemCount) · \(bytes.formattedBytes)")
     }
 
     private func countText(included: Int) -> String {
         let total = group.items.count
-        return included == total ? total.itemCount : "\(included.formatted()) de \(total.itemCount)"
+        return included == total ? total.itemCount : String(localized: "\(included.formatted()) de \(total.itemCount)")
     }
 }
 
@@ -268,10 +270,10 @@ struct CleanupProgressView: View {
     var body: some View {
         VStack(spacing: 0) {
             SheetHeader(
-                title: model.isCancelling ? "Cancelando…" : "Limpando…",
+                title: model.isCancelling ? String(localized: "Cancelando…") : String(localized: "Limpando…"),
                 subtitle: model.isCancelling
-                    ? "Parando depois do item atual. O que já foi feito fica como está."
-                    : "Os itens vão para a Lixeira um a um."
+                    ? String(localized: "Parando depois do item atual. O que já foi feito fica como está.")
+                    : String(localized: "Os itens vão para a Lixeira um a um.")
             )
 
             VStack(alignment: .leading, spacing: 8) {
@@ -320,14 +322,14 @@ struct CleanupProgressView: View {
     }
 
     private var counterText: String {
-        "\(model.processedItems.formatted()) de \(model.totalItems.itemCount) · "
-            + "\(model.processedBytes.formattedBytes) de \(model.totalBytes.formattedBytes)"
+        let items = model.processedItems.formatted()
+        return String(localized: "\(items) de \(model.totalItems.itemCount) · \(model.processedBytes.formattedBytes) de \(model.totalBytes.formattedBytes)")
     }
 
     private var currentItemText: String {
-        guard let url = model.currentItem else { return "Preparando…" }
-        let verb = model.currentCategory == .trash ? "Apagando" : "Movendo"
-        return "\(verb) \(url.abbreviatedPath)"
+        guard let url = model.currentItem else { return String(localized: "Preparando…") }
+        let path = url.abbreviatedPath
+        return model.currentCategory == .trash ? String(localized: "Apagando \(path)") : String(localized: "Movendo \(path)")
     }
 }
 
@@ -342,7 +344,7 @@ private struct StepRow: View {
             indicator(state)
                 .frame(width: 18, height: 18)
 
-            Text(state == .running ? "Limpando \(group.category.title)…" : group.category.title)
+            Text(state == .running ? String(localized: "Limpando \(group.category.localizedTitle)…") : group.category.localizedTitle)
                 .font(.system(size: 13, weight: state == .running ? .semibold : .regular))
                 .foregroundStyle(state == .pending ? Color.mcSecondary : Color.mcText)
                 .lineLimit(1)
@@ -352,7 +354,7 @@ private struct StepRow: View {
                 HStack(spacing: 4) {
                     Image(systemName: "exclamationmark.triangle")
                         .font(.system(size: 11, weight: .semibold))
-                    Text(failures == 1 ? "1 falha" : "\(failures.formatted()) falhas")
+                    Text(failures == 1 ? String(localized: "1 falha") : String(localized: "\(failures.formatted()) falhas"))
                 }
                 .font(.system(size: 12))
                 .foregroundStyle(Color.mcWarning)
@@ -460,23 +462,23 @@ struct CleanupResultView: View {
 
     private func title(_ summary: CleanupSummary) -> String {
         if summary.trashedBytes > 0 {
-            return "\(summary.trashedBytes.formattedBytes) movidos para a Lixeira"
+            return String(localized: "\(summary.trashedBytes.formattedBytes) movidos para a Lixeira")
         }
         if summary.deletedBytes > 0 {
-            return "\(summary.deletedBytes.formattedBytes) apagados definitivamente"
+            return String(localized: "\(summary.deletedBytes.formattedBytes) apagados definitivamente")
         }
-        return "Nenhum item foi removido"
+        return String(localized: "Nenhum item foi removido")
     }
 
     private func detail(_ summary: CleanupSummary) -> String {
         var parts: [String] = []
         if summary.wasCancelled {
-            parts.append("Limpeza cancelada. O que já tinha sido feito foi mantido.")
+            parts.append(String(localized: "Limpeza cancelada. O que já tinha sido feito foi mantido."))
         }
         if summary.trashedBytes > 0 {
-            parts.append("O espaço só é liberado de fato quando você esvazia a Lixeira.")
+            parts.append(String(localized: "O espaço só é liberado de fato quando você esvazia a Lixeira."))
         } else if summary.deletedBytes > 0 {
-            parts.append("O espaço já foi liberado.")
+            parts.append(String(localized: "O espaço já foi liberado."))
         }
         return parts.joined(separator: " ")
     }
@@ -492,23 +494,23 @@ private struct BeforeAfterCard: View {
         let usedAfter = volume.usedBytes - freed
         VStack(alignment: .leading, spacing: 14) {
             row(
-                label: "Antes",
-                value: "\(volume.availableBytes.formattedBytes) livres",
+                label: String(localized: "Antes"),
+                value: String(localized: "\(volume.availableBytes.formattedBytes) livres"),
                 highlighted: false,
                 used: Double(volume.usedBytes) / total,
                 freed: 0
             )
             row(
-                label: summary.trashedBytes > 0 ? "Depois de esvaziar a Lixeira" : "Depois",
-                value: "\((volume.availableBytes + freed).formattedBytes) livres",
+                label: summary.trashedBytes > 0 ? String(localized: "Depois de esvaziar a Lixeira") : String(localized: "Depois"),
+                value: String(localized: "\((volume.availableBytes + freed).formattedBytes) livres"),
                 highlighted: true,
                 used: Double(usedAfter) / total,
                 freed: Double(freed) / total
             )
             HStack(spacing: 20) {
-                legend(.mcDiskUsed, "Usado")
-                legend(.mcFreed, "Liberado: \(freed.formattedBytes)")
-                legend(.mcDiskFree, "Livre", border: .mcDiskFreeBorder)
+                legend(.mcDiskUsed, String(localized: "Usado"))
+                legend(.mcFreed, String(localized: "Liberado: \(freed.formattedBytes)"))
+                legend(.mcDiskFree, String(localized: "Livre"), border: .mcDiskFreeBorder)
             }
             .font(.system(size: 12))
             .foregroundStyle(Color.mcSecondary)
@@ -599,7 +601,9 @@ private struct FailureList: View {
 
     private var title: String {
         let bytes = failures.reduce(Int64(0)) { $0 + $1.item.size }
-        let count = failures.count == 1 ? "1 item não foi removido" : "\(failures.count.formatted()) itens não foram removidos"
+        let count = failures.count == 1
+            ? String(localized: "1 item não foi removido")
+            : String(localized: "\(failures.count.formatted()) itens não foram removidos")
         return "\(count) · \(bytes.formattedBytes)"
     }
 }
@@ -615,7 +619,7 @@ private struct FailureRow: View {
                     .lineLimit(1)
                     .truncationMode(.middle)
                     .help(failure.item.url.path)
-                Text(failure.reason)
+                Text(failure.localizedReason)
                     .font(.system(size: 12))
                     .foregroundStyle(Color.mcWarning)
                     .lineLimit(1)

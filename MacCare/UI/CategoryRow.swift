@@ -10,7 +10,7 @@ struct CategoryRow: View {
     var body: some View {
         HStack(spacing: 12) {
             Toggle(isOn: Binding(get: { isSelected }, set: { _ in onToggle() })) {
-                Text(category.title)
+                Text(category.localizedTitle)
             }
             .toggleStyle(.checkbox)
             .labelsHidden()
@@ -28,10 +28,10 @@ struct CategoryRow: View {
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 1) {
-                Text(category.title)
+                Text(category.localizedTitle)
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(isLocked ? Color.mcSecondary : Color.mcText)
-                Text(isLocked ? "Precisa de Acesso Total ao Disco para ser lida" : category.summary)
+                Text(isLocked ? String(localized: "Precisa de Acesso Total ao Disco para ser lida") : category.localizedSummary)
                     .font(.system(size: 12))
                     .foregroundStyle(isLocked ? Color.mcDisabled : Color.mcSecondary)
             }
@@ -69,12 +69,17 @@ struct CategoryRow: View {
             HStack(spacing: 4) {
                 Image(systemName: isLocked ? "lock" : "exclamationmark.triangle")
                     .font(.system(size: 11, weight: .semibold))
-                Text(isLocked ? "Sem acesso" : (count == 1 ? "1 pasta sem leitura" : "\(count) pastas sem leitura"))
+                Text(statusText(unreadable: count))
             }
             .font(.system(size: 12))
             .foregroundStyle(Color.mcWarning)
             .help(result.unreadableFolders.map(\.path).joined(separator: "\n"))
         }
+    }
+
+    private func statusText(unreadable count: Int) -> String {
+        if isLocked { return String(localized: "Sem acesso") }
+        return count == 1 ? String(localized: "1 pasta sem leitura") : String(localized: "\(count) pastas sem leitura")
     }
 
     @ViewBuilder
@@ -88,7 +93,7 @@ struct CategoryRow: View {
                 .font(.system(size: 13, weight: .medium).monospacedDigit())
                 .foregroundStyle(Color.mcText)
         default:
-            Text("—")
+            Text(verbatim: "—")
                 .font(.system(size: 13))
                 .foregroundStyle(Color.mcDisabled)
         }

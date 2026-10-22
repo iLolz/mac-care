@@ -21,3 +21,8 @@ jobs:
           xcodebuild -project MacCare.xcodeproj -scheme MacCare
           -configuration Debug -destination 'platform=macOS'
           CODE_SIGNING_ALLOWED=NO build
+      - name: Checar traduções (pt-BR, en, es)
+        run: |
+          xcodebuild -exportLocalizations -project MacCare.xcodeproj \
+            -localizationPath build/localizations -exportLanguage en -exportLanguage es
+          python3 scripts/check-localizations.py build/localizations

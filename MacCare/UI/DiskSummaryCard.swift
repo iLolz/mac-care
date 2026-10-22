@@ -59,9 +59,13 @@ struct DiskSummaryCard: View {
                 .accessibilityLabel(accessibilityText)
 
             HStack(spacing: 20) {
-                LegendItem(color: .mcDiskUsed, text: "Usado \(usedWithoutRecoverable.formattedBytes)")
-                LegendItem(color: .mcAccent, text: "Recuperável \(recoverableShown.formattedBytes)")
-                LegendItem(color: .mcDiskFree, border: .mcDiskFreeBorder, text: "Livre \((volume?.availableBytes ?? 0).formattedBytes)")
+                LegendItem(color: .mcDiskUsed, text: String(localized: "Usado \(usedWithoutRecoverable.formattedBytes)"))
+                LegendItem(color: .mcAccent, text: String(localized: "Recuperável \(recoverableShown.formattedBytes)"))
+                LegendItem(
+                    color: .mcDiskFree,
+                    border: .mcDiskFreeBorder,
+                    text: String(localized: "Livre \((volume?.availableBytes ?? 0).formattedBytes)")
+                )
             }
             .font(.system(size: 12))
             .foregroundStyle(Color.mcSecondary)
@@ -74,7 +78,7 @@ struct DiskSummaryCard: View {
     }
 
     private var lastScanText: String {
-        if isScanning { return "Analisando…" }
+        if isScanning { return String(localized: "Analisando…") }
         return lastScan?.relativeScanTime ?? "—"
     }
 
@@ -95,7 +99,7 @@ struct DiskSummaryCard: View {
     private var accessibilityText: String {
         let percent = { (value: Double) in value.formatted(.percent.precision(.fractionLength(1))) }
         let free = max(1 - fractions.used - fractions.recoverable, 0)
-        return "Disco: \(percent(fractions.used)) usado, \(percent(fractions.recoverable)) recuperável, \(percent(free)) livre"
+        return String(localized: "Disco: \(percent(fractions.used)) usado, \(percent(fractions.recoverable)) recuperável, \(percent(free)) livre")
     }
 }
 

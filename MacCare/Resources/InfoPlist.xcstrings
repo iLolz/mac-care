@@ -1,0 +1,36 @@
+{
+  "sourceLanguage": "pt-BR",
+  "version": "1.0",
+  "strings": {
+    "NSDownloadsFolderUsageDescription": {
+      "comment": "Privacy - Downloads Folder Usage Description",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Mac Care analisa a pasta Downloads para encontrar arquivos antigos que podem ser removidos."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mac Care scans your Downloads folder to find old files that can be removed."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mac Care analiza la carpeta Descargas para encontrar archivos antiguos que se pueden eliminar."
+          }
+        }
+      }
+    },
+    "CFBundleDisplayName": {
+      "shouldTranslate": false
+    },
+    "CFBundleName": {
+      "shouldTranslate": false
+    }
+  }
+}

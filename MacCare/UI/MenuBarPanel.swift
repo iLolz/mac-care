@@ -53,7 +53,7 @@ struct MenuBarPanel: View {
             Button {
                 Task { await model.scan() }
             } label: {
-                Text(model.isScanning ? "Analisando…" : "Analisar agora")
+                Text(model.isScanning ? String(localized: "Analisando…") : String(localized: "Analisar agora"))
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(MCButtonStyle(kind: isLowSpace ? .warning : .primary))
@@ -97,8 +97,8 @@ struct MenuBarPanel: View {
     }
 
     private var headerText: String {
-        let name = model.volumeName ?? "Disco"
-        return isLowSpace ? "\(name) · pouco espaço" : name
+        let name = model.volumeName ?? String(localized: "Disco")
+        return isLowSpace ? String(localized: "\(name) · pouco espaço") : name
     }
 
     private var isLowSpace: Bool {
@@ -108,12 +108,12 @@ struct MenuBarPanel: View {
 
     private var freeText: String {
         guard let volume = model.volume else { return "—" }
-        return "\(volume.availableBytes.formattedBytes) livres"
+        return String(localized: "\(volume.availableBytes.formattedBytes) livres")
     }
 
     private var lastScanText: String {
-        if model.isScanning { return "Analisando…" }
-        guard let lastScan = model.lastScan else { return "Não analisado" }
+        if model.isScanning { return String(localized: "Analisando…") }
+        guard let lastScan = model.lastScan else { return String(localized: "Não analisado") }
         return lastScan.relativeScanTime
     }
 
@@ -134,7 +134,7 @@ struct MenuBarPanel: View {
     private var accessibilityText: String {
         let percent = { (value: Double) in value.formatted(.percent.precision(.fractionLength(1))) }
         let free = max(1 - fractions.used - fractions.recoverable, 0)
-        return "Disco: \(percent(fractions.used)) usado, \(percent(fractions.recoverable)) recuperável, \(percent(free)) livre"
+        return String(localized: "Disco: \(percent(fractions.used)) usado, \(percent(fractions.recoverable)) recuperável, \(percent(free)) livre")
     }
 
     private func openMainWindow() {
