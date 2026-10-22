@@ -136,7 +136,7 @@ final class CleanupViewModel: Identifiable {
         phase = .cleaning
 
         let entries = plan.map {
-            CleanupPlanEntry(category: $0.id, title: $0.category.title, items: $0.items)
+            CleanupPlanEntry(category: $0.id, title: $0.category.localizedTitle, items: $0.items)
         }
         let (events, continuation) = AsyncStream.makeStream(of: CleanupEvent.self)
         let cleaner = cleaner

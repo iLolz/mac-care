@@ -11,12 +11,13 @@ struct FullDiskAccessBanner: View {
                 .font(.system(size: 18, weight: .medium))
                 .foregroundStyle(Color.mcWarning)
             VStack(alignment: .leading, spacing: 1) {
-                Text("Conceda Acesso Total ao Disco")
+                Text("Permita o Acesso Total ao Disco")
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(Color.mcText)
-                Text("Sem ele, a Lixeira e algumas pastas de outros apps não podem ser analisadas.")
+                Text("O macOS protege pastas como a Lixeira e os dados de outros apps. Com o acesso, o Mac Care consegue medir o que dá para limpar nelas. A análise só lê o disco: nada sai do seu Mac e nada é apagado sem a sua confirmação.")
                     .font(.system(size: 12))
                     .foregroundStyle(Color.mcWarningText)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             Spacer(minLength: 0)
             Button("Verificar de novo", action: onRecheck)

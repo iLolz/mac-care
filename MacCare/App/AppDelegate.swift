@@ -5,6 +5,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var showInMenuBar = AppSettings.showInMenuBar
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        AppLanguage.recordLaunchLanguage()
         LaunchAtLogin.configureOnFirstLaunch()
 
         let center = NotificationCenter.default

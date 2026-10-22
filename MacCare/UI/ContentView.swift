@@ -98,18 +98,20 @@ struct ContentView: View {
     }
 
     private var listSummary: String {
-        if model.isScanning { return "Analisando…" }
+        if model.isScanning { return String(localized: "Analisando…") }
         guard model.lastScan != nil else { return "" }
-        var parts = ["\(model.recoverableBytes.formattedBytes) encontrados"]
+        var parts = [String(localized: "\(model.recoverableBytes.formattedBytes) encontrados")]
         if model.lockedCount > 0 {
-            parts.append("\(model.lockedCount) sem acesso")
+            parts.append(String(localized: "\(model.lockedCount) sem acesso"))
         }
         return parts.joined(separator: " · ")
     }
 
     private func footerSummary(count: Int) -> String {
-        let selection = count == 1 ? "1 categoria selecionada" : "\(count) categorias selecionadas"
-        return "\(selection) · os itens vão para a Lixeira e você revisa antes"
+        let selection = count == 1
+            ? String(localized: "1 categoria selecionada")
+            : String(localized: "\(count) categorias selecionadas")
+        return String(localized: "\(selection) · os itens vão para a Lixeira e você revisa antes")
     }
 
     private var footer: some View {
