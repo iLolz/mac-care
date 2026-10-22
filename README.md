@@ -119,7 +119,7 @@ git tag v0.1.0
 git push origin v0.1.0
 ```
 
-The version shown in the app comes from the tag. The workflow also runs on pull requests that change the build setup and on manual runs, uploading the packages as a workflow artifact without creating a release.
+Or open **Actions › Release › Run workflow** on `main` and enter the version (for example `0.1.0`); the workflow creates the `v0.1.0` tag and the release for you. The version shown in the app comes from the tag. The workflow also runs on pull requests that change the build setup and on manual runs without a version, uploading the packages as a workflow artifact without creating a release.
 
 ## License
 
