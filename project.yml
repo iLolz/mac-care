@@ -1,0 +1,33 @@
+name: MacCare
+options:
+  bundleIdPrefix: io.github.ilolz
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+packages:
+  CleanerKit:
+    path: CleanerKit
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  MacCare:
+    type: application
+    platform: macOS
+    sources: [MacCare]
+    dependencies:
+      - package: CleanerKit
+    scheme:
+      gatherCoverageData: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.ilolz.MacCare
+        PRODUCT_NAME: Mac Care
+        ENABLE_HARDENED_RUNTIME: YES
+        CODE_SIGN_STYLE: Automatic
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Mac Care
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.utilities
+        INFOPLIST_KEY_NSDownloadsFolderUsageDescription: O Mac Care analisa a pasta Downloads para encontrar arquivos antigos que podem ser removidos.
