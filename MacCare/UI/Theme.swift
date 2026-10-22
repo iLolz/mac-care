@@ -29,6 +29,8 @@ extension Color {
     static let mcDiskFreeBorder = Color(hex: 0xC7C7CC)
     static let mcWarning = Color(hex: 0xB45309)
     static let mcWarningText = Color(hex: 0x5A3A12)
+    static let mcLowSpace = Color(hex: 0xC2620A)
+    static let mcLowSpaceTrack = Color(hex: 0xFBE3C4)
     static let mcBanner = Color(hex: 0xFFF4E5)
     static let mcBannerBorder = Color(hex: 0xF2C68C)
     static let mcBannerButtonBorder = Color(hex: 0xE0B57A)

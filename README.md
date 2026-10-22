@@ -49,6 +49,10 @@ swift test --package-path CleanerKit
 
 Para ler pastas protegidas (como a Lixeira), conceda **Acesso Total ao Disco** em Ajustes do Sistema › Privacidade e Segurança. O app mostra um aviso com atalho quando o acesso está faltando.
 
+### Barra de menus e inicialização
+
+Ao fechar a janela, o Mac Care continua na barra de menus: o painel mostra o espaço livre, quanto dá para recuperar e atalhos para analisar de novo ou reabrir o app. O app também abre ao iniciar sessão (ativado na primeira execução). As duas opções podem ser desligadas em **Ajustes › Geral**; com a barra de menus desligada, fechar a janela encerra o app.
+
 ## Licença
 
 [MIT](LICENSE)

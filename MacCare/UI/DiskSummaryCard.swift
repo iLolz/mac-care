@@ -91,13 +91,15 @@ struct DiskSummaryCard: View {
     }
 }
 
-private struct UsageBar: View {
+struct UsageBar: View {
     let fractions: (used: Double, recoverable: Double)
+    var usedColor: Color = .mcDiskUsed
+    var freeColor: Color = .mcDiskFree
 
     var body: some View {
         GeometryReader { proxy in
             HStack(spacing: 0) {
-                Color.mcDiskUsed
+                usedColor
                     .frame(width: proxy.size.width * fractions.used)
                 if fractions.recoverable > 0 {
                     Color.white.frame(width: 2)
@@ -107,7 +109,7 @@ private struct UsageBar: View {
                 Spacer(minLength: 0)
             }
         }
-        .background(Color.mcDiskFree)
+        .background(freeColor)
         .clipShape(Capsule())
     }
 }
