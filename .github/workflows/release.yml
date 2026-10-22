@@ -3,6 +3,8 @@ name: Release
 # Builds an unsigned (ad-hoc signed) universal Mac Care.app and packages it as .zip and .dmg.
 # - Pull requests that touch the build: packages only, uploaded as a workflow artifact.
 # - Tags like v0.1.0: packages and publishes a GitHub Release with both files attached.
+# - Manual runs with a version (e.g. 0.1.0): same as a tag; the release creates tag v<version>
+#   on the commit that was built. Without a version, a manual run only uploads the artifact.
 on:
   push:
     tags: ["v*"]
@@ -11,6 +13,11 @@ on:
       - ".github/workflows/release.yml"
       - "project.yml"
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, without the v (e.g. 0.1.0). Leave empty to only build."
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -23,9 +30,15 @@ jobs:
 
       - name: Resolve version
         id: version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
           if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
             version="${GITHUB_REF_NAME#v}"
+            echo "tag=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
+          elif [[ -n "$INPUT_VERSION" ]]; then
+            version="${INPUT_VERSION#v}"
+            echo "tag=v$version" >> "$GITHUB_OUTPUT"
           else
             version="$(sed -n 's/^ *MARKETING_VERSION: "\(.*\)"/\1/p' project.yml)-dev"
           fi
@@ -72,11 +85,13 @@ jobs:
           path: dist/*
 
       - name: Publish GitHub Release
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: steps.version.outputs.tag != ''
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
         run: >
-          gh release create "$GITHUB_REF_NAME" dist/*
-          --title "Mac Care $GITHUB_REF_NAME"
+          gh release create "$TAG" dist/*
+          --target "$GITHUB_SHA"
+          --title "Mac Care $TAG"
           --generate-notes
           --notes "Unsigned build (ad-hoc signed, not notarized). See the README for how to open it the first time."
