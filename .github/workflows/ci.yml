@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Testes do CleanerKit
+        run: swift test --package-path CleanerKit
+      - name: Instalar XcodeGen
+        run: brew install xcodegen
+      - name: Gerar projeto Xcode
+        run: xcodegen generate
+      - name: Build do app
+        run: >
+          xcodebuild -project MacCare.xcodeproj -scheme MacCare
+          -configuration Debug -destination 'platform=macOS'
+          CODE_SIGNING_ALLOWED=NO build
