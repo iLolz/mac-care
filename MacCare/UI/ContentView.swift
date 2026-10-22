@@ -4,6 +4,7 @@ import SwiftUI
 
 struct ContentView: View {
     let model: ScanViewModel
+    @State private var cleanup: CleanupViewModel?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -51,6 +52,11 @@ struct ContentView: View {
             model.refreshAccess()
         }
         .task { await model.scan() }
+        .sheet(item: $cleanup) { cleanup in
+            CleanupSheet(model: cleanup, onFinished: {
+                Task { await model.scan() }
+            })
+        }
     }
 
     private var categoryList: some View {
@@ -117,11 +123,11 @@ struct ContentView: View {
                     .foregroundStyle(Color.mcSecondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Button("Limpar \(bytes.formattedBytes)") {
-                    // TODO: step 2
+                    cleanup = CleanupViewModel(scan: model)
                 }
                 .buttonStyle(MCButtonStyle(kind: .primary))
                 .shadow(color: Color.mcAccent.opacity(0.3), radius: 1, y: 1)
-                .disabled(bytes <= 0)
+                .disabled(bytes <= 0 || model.isScanning)
                 .keyboardShortcut(.defaultAction)
             }
             .padding(.horizontal, Metrics.windowPaddingH)

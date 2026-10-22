@@ -8,8 +8,8 @@ Limpador de armazenamento open source para macOS. Analisa o disco periodicamente
 
 Em desenvolvimento. Roadmap:
 
-1. **Análise do disco** — varredura das categorias limpáveis e interface principal *(em andamento)*
-2. **Limpeza segura** — prévia, confirmação, envio para a Lixeira e exclusões
+1. **Análise do disco** — varredura das categorias limpáveis e interface principal
+2. **Limpeza segura** — prévia, confirmação, envio para a Lixeira e exclusões *(em andamento)*
 3. **Monitoramento e alertas** — checagem em segundo plano, notificações e widget
 4. **Distribuição** — assinatura, notarização e releases em `.dmg`
 

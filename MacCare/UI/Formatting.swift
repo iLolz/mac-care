@@ -20,3 +20,17 @@ extension Date {
         Date.relativeFormatter.string(from: self)
     }
 }
+
+extension Int {
+    /// "1 item", "1.234 itens".
+    var itemCount: String {
+        self == 1 ? "1 item" : "\(formatted()) itens"
+    }
+}
+
+extension URL {
+    /// The path with the home folder shown as `~`.
+    var abbreviatedPath: String {
+        (path as NSString).abbreviatingWithTildeInPath
+    }
+}
