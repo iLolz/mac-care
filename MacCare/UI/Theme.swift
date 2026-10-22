@@ -24,6 +24,8 @@ extension Color {
     static let mcDisabledRow = Color(hex: 0xFAFAFB)
     static let mcAccent = Color(hex: 0x0A6E7C)
     static let mcAccentTint = Color(hex: 0xE6F3F5)
+    static let mcFreed = Color(hex: 0x9FD3DA)
+    static let mcPath = Color(hex: 0x3A3A40)
     static let mcDiskUsed = Color(hex: 0x3A4652)
     static let mcDiskFree = Color(hex: 0xE3E3E8)
     static let mcDiskFreeBorder = Color(hex: 0xC7C7CC)
